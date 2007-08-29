@@ -3,7 +3,7 @@
 " Created:      2007 Aug 29
 " Last Change:  2007 Aug 29
 " Author:	Andy Wokula <anwoku@yahoo.de>
-" Version:	1
+" Version:	2
 
 " Installation:
 "   :source karma.vim
@@ -51,7 +51,7 @@ function! s:Karma(...)
     let r = 0		    " 0, min for Unfulfilling
     let s = p*4 + q - r	    " 2156 = 499*4 + 160 - 0
     let sd = 0		    " declare var unused
-    if s%2 != score%2	    " 0 != 1
+    if (score-s)%2
 	" adjusting with q and r requires an even difference
 	let p += 1	    " 500
 	let q -= 1	    " 159
