@@ -1,0 +1,26 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2005
+
+Usage:
+:Karma {score} {votes}
+
+Examples:
+:Karma 4727 1463
+Karma: 4727/1463
+   1. Life Changing: 1088   Helpful: 375   Unfulfilling: 0
+   2. Life Changing: 1090   Helpful: 370   Unfulfilling: 3
+      ...
+  76. Life Changing: 1238   Helpful: 0   Unfulfilling: 225
+
+(the dots are literal output, and btw this is the karma for vimscript #273)
+
+Checking the results (here for 2.):
+    1090*4 + 370*1 + 3*(-1) = 4727
+    1090 + 370 + 3 = 1463
+
+:Karma -3 16
+Karma: -3/16
+   1. Life Changing: 1   Helpful: 4   Unfulfilling: 11
+
+Other vimscripts: vimscript #936
+
+2007 Dec 08
