@@ -2,10 +2,11 @@
 "		votes
 " File:         karma.vim
 " Created:      2007 Aug 29
-" Last Change:  2007 Sep 04
+" Last Change:  2010 Mar 30
+" Rev Days:     2
 " Author:	Andy Wokula <anwoku@yahoo.de>
 " Vim Version:	5.7 or higher
-" Version:	3
+" Version:	4
 
 " Installation:
 "   Put the file into your ~/.vim/plugin/ folder (:h 'rtp').
@@ -21,13 +22,14 @@
 "   script karma    Rating {score}/{votes}, Downloaded by ...
 "
 " Note: the math is derived from an example, not proven; the ":Karma -1 1"
-"   bug is fixed; currently I'm not aware of wrong calculations
+"   bug is fixed; currently(2009 Jan 20) I'm not aware of wrong calculations
 
 " Vim 5.7 limits hit:
-"   - no script local functions
-"   - no '\zs', '\ze' patterns
-"   - no numbered function arguments (a:1, a:2, ...)
-"   - no :finish command
+" - no script local functions
+" - no '\zs', '\ze' patterns
+" - no numbered function arguments (a:1, a:2, ...)
+" - no :finish command
+" - :command doesn't accept -bar
 
 " Credits:
 "   vimscript #936
@@ -105,8 +107,27 @@ function! Karma_Votes(cargs)
     let nth = substitute("    ".(bm+2), ' *\(....\)', '\1', "")
     echo nth.". Life Changing:" p "  Helpful:" q "  Unfulfilling:" r
     " echo "      Check:  Score =" 4*p+q-r "  Votes =" p+q+r
+
+    if bm<3
+	return
+    endif
+    let bh = bm/2 + 1
+    let p = p - bh*2
+    let q = q + bh*5
+    let r = r - bh*3
+    echo "\n"
+    echohl ModeMsg
+    echo "A probable voting:"
+    echohl None
+    let nth = substitute("    ".(bh+bm%2), ' *\(....\)', '\1', "")
+    echo nth.". Life Changing:" p "  Helpful:" q "  Unfulfilling:" r
+
 endfunction
 
-command! -nargs=* Karma call Karma_Votes(<q-args>)
+if v:version >= 600
+    command! -bar -nargs=* Karma call Karma_Votes(<q-args>)
+else
+    command! -nargs=* Karma call Karma_Votes(<q-args>)
+endif
 
 " vim:set ts=8 sts=4 noet:
